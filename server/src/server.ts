@@ -3,12 +3,17 @@ import { ApolloServer } from '@apollo/server';
 import path from 'node:path';
 import { typeDefs, resolvers } from './schemas/index.js';
 import db from './config/connection.js';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 // import routes from './routes/index.js';
 import { expressMiddleware } from '@apollo/server/express4';
 import { authenticateToken } from './utils/auth-utils.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const server = new ApolloServer({
   typeDefs,
