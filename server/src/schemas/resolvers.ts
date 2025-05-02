@@ -29,12 +29,18 @@ interface BookI {
     image: String
     link: String
 }
+
 interface saveBookArgs {
     input: {
         userId: String
         book: BookI
     }
 }
+
+interface removeBookArgs {
+    bookId: string;
+}
+
 const resolvers = {
     Query: {
         users: async () => {
@@ -85,6 +91,19 @@ const resolvers = {
             );
 
             return book;
+        },
+        removeBook: async (_parent: unknown, { bookId }: removeBookArgs, context: any) => {
+            if (!context.user) {
+                throw new AuthenticationError('Could not authenticate user.');
+            }
+
+            await User.findOneAndUpdate(
+                { _id: context.user._id },
+                { $pull: { savedBooks: { bookId } } },
+                { new: true }
+            );
+
+            return "Book was deleted!";
         }
     }
 };

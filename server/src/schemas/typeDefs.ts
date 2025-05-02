@@ -23,7 +23,7 @@ const typeDefs = `
     username: String!
     email: String!
     password: String!
-    savedBooks: [Book]
+    savedBooks: [BookInput]
   }
 
   input BookInput {
@@ -55,7 +55,7 @@ const typeDefs = `
     addUser(input: UserInput!): Auth
     login(email: String!, password: String!): Auth
     saveBook(input: SaveBookInput!): Book
-    deleteBook(userId: String!, bookId: String!): String
+    removeBook(bookId: String!): String
   }
 `;
 
